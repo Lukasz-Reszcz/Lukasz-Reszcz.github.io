@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="graph.css"/>
     <link rel="stylesheet" href="verbindungsartform/verbindungsartform.css">
     <link rel="stylesheet" href="graphenform/graphenform.css">
+    <link rel="stylesheet" href="forms/formVerbindungLoeschen.css">
 
 </head>
 <body>
@@ -39,6 +40,7 @@
                 <p id="zeichneVerbindung">verbindung Zeichnen</p>
                 <p id="zeichneTestGraphen">Beispiel zeichnen</p>
                 <p id="graphenKopieren">Aufgabenmodell kopieren</p>
+                <p id="verbindungLoeschen">Verbindung löschen</p>
                 <p id="nachIstKonkret">nach Ist-Konkret verschieben</p>
                 <p id="nachIstAbstrakt">nach Ist-Abstrakt verschieben</p>
                 <p id="nachSollAbstrakt">nach Soll-Abstrakt verschieben</p>
@@ -105,6 +107,15 @@
         <input id="graphenDatei" type="file">
         <button id="btngraphenHochladen">Aufgabenmodell hochladen</button> <br>
         <button id="graphenformschliessen">schließen</button>
+    </div>
+
+    <div id="formVerbindungLoeschen" style="text-align: center;">
+        <h3 id="titelVerbindungLoeschen">Verbindung löschen</h3>
+        <div style="display: flex; gap: 10px;">
+            <p>K1 - K2</p>
+            <button>verbindung löschen</button>
+        </div>
+        <button id="formVerbindungLoeschenschliessen" style="position: absolute; bottom: 10px;">schließen</button>
     </div>
     
     <script src=""></script> 

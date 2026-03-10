@@ -10,7 +10,7 @@
     height: 200px;
 }
 
-#verbformschliessen, #graphenformschliessen{
+#verbformschliessen, #graphenformschliessen, #formVerbindungLoeschenschliessen{
     position: relative;
     color: white;
     background-color: red;

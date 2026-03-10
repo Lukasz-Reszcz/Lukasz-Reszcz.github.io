@@ -3,6 +3,7 @@ import "./knotenMenue.js";
 import Graph from "./graph_class.js";
 import "./verbindungsartform/verbindungsartform.js";
 import "./graphenform/graphenform.js";
+import "./forms/formVerbindungLoeschen.js";
 
 // globale Variablen
 window.nodeMaxID = 0;
