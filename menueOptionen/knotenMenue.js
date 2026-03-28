@@ -55,3 +55,5 @@ document.getElementById("quelleHinzufuegen").addEventListener("click", () => {
     const anforderungsquelle = prompt("Gib die Anforderungsquelle an, z.B. einen Dateinamen", "anforderungsquelle.txt");
     Node.aktiverKnoten.anforderungsquelle = anforderungsquelle;
 })
+
+// document.getElementById()

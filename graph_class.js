@@ -73,26 +73,36 @@ export default class Graph {
 
                 graphClone.knoten_h.stand = knotenClone.stand;
 
-                Node.mapKopie.set(this.knoten_h.id, graphClone.knoten_h.id);
+                // Node.mapKopie.set(this.knoten_h.id, graphClone.knoten_h.id);
+                Node.mapKopie.set(graphClone.knoten_h.id, this.knoten_h.id );
+
 
                 // Den Kopierten Knoten löschen
                 knotenClone.loesche_Knoten();
             }
             else{
                 graphClone.addKnoten(knotenClone.id);
-                Node.mapKopie.set(knotenid, knotenClone.id);
             }   
         }
 
-        // graphClone.loescheKnoten(graphClone.knoten_h.id);
-        console.log(Node.mapKopie);
-        console.log(graphClone);
 
         // Verbindungen kopieren
         for(let i=0; i<this.knoten.length; i++){
             for(let j=0; j<this.knoten.length; j++){
-                graphClone.addConnection(Node.mapKopie.get(this.knoten[i]), Node.mapKopie.get(this.knoten[j]), 
-                    this.kanten[i][j]);
+
+                // Verbindungen suchen
+                let knotenVonKopieID;
+                let knotenNachKopieID;
+                
+                for(const [knotenKopieID, knotenID] of Node.mapKopie.entries()){
+                    if(knotenID == this.knoten[i])
+                        knotenVonKopieID = knotenKopieID;
+                    
+                    if(knotenID == this.knoten[j])
+                        knotenNachKopieID = knotenKopieID;
+                }
+
+                graphClone.addConnection(knotenVonKopieID, knotenNachKopieID, this.kanten[i][j]);
             }
         }
 

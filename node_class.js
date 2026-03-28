@@ -69,6 +69,9 @@ export default class Node {
 
         // Den Stand kopieren
         knoten_ergebnis.stand = knoten.stand;
+
+        //Node.mapKopie.set(knotenID, knoten_ergebnis.id);
+        Node.mapKopie.set(knoten_ergebnis.id, knotenID);
     
         return knoten_ergebnis;
     }
@@ -219,9 +222,10 @@ export default class Node {
             this.el.style.backgroundColor = "#00e6e6";
             // alle Kopien markieren
             for(let knotenKop of Node.mapKopie){
-                if(knotenKop[1] != Node.aktiverKnoten.id)   continue;
+                console.log(knotenKop)
+                if(knotenKop[0] != Node.aktiverKnoten.id)   continue;
 
-                Node.getByID(knotenKop[0]).el.style.backgroundColor = "#34aab7"
+                Node.getByID(knotenKop[1]).el.style.backgroundColor = "#34aab7"
             }
 
 
