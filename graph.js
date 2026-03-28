@@ -212,10 +212,11 @@ function loescheUnterknoten(graphID, unterknoten){
 
 //=========================================================
 document.getElementById("neuerGraph").addEventListener('click', (event) => {
-    
-
     let aufgabenname = prompt("Gebe den Aufgabennamen an", "Aufgabenname");
     if(aufgabenname != ""){
+        if(!aufgabennameZulaessig(aufgabenname))
+            return;
+
         let graph = new Graph();
         positionAnpassen(graph.knoten_h, "knoten");
         graph.knoten_h.set_info(aufgabenname);
@@ -232,6 +233,9 @@ document.getElementById("neuerKnoten").addEventListener('click', (event) => {
     
     let aufgabenname = prompt("Gebe den Teilaufgabennamen an", "Teilaufgabe");
     if(aufgabenname != ""){
+        if(!aufgabennameZulaessig(aufgabenname))
+            return;
+
         let knoten = new Node("Test");
         knoten.el.className = "draggable-el-freierKnoten";
 
@@ -270,6 +274,17 @@ function positionAnpassen(element, typ){
 
         // Debug
         console.log(element.stand);
+}
+
+function aufgabennameZulaessig(aufgabenname){
+    if(aufgabenname[0] == "[" && 
+        ((aufgabenname[aufgabenname.length-1] == "]") || 
+        aufgabenname.substring(aufgabenname.length-2) == "]*")){
+            alert("Unzulässiger Aufgabenname");
+            return false;
+        }
+
+    return true;
 }
 
 document.getElementById("zeichneVerbindung").addEventListener('click', (event) => {
