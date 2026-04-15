@@ -293,6 +293,10 @@ export default class Node {
                         let elternID2 = knotenNach.elternID;
 
                         if(elternID1 != elternID2){
+                            // Debug
+                            alert("ElternID1: " + elternID1 +
+                                "\nElternID2: " + elternID2);
+
                             alert("Unzulässige Verbindung");
                             return;
                         }

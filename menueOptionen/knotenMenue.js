@@ -59,11 +59,15 @@ document.getElementById("quelleHinzufuegen").addEventListener("click", () => {
 document.getElementById("optionalerKnoten").addEventListener("click", () => {
     let knoten = Node.aktiverKnoten;
     
+    setOptionalenKnoten(knoten);
+})
+
+export function setOptionalenKnoten(knoten){
     knotennameBereinigen(knoten);
     let kennzeichnungOptional = "[" + knoten.info + "]";
     
     knoten.set_info(kennzeichnungOptional);
-})
+}
 
 document.getElementById("schleifeKnoten").addEventListener("click", () => {
     let knoten = Node.aktiverKnoten;

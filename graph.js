@@ -486,6 +486,11 @@ document.getElementById("zeichneTestGraphen").addEventListener("click", () => {
     beispielgraph_1.addConnection(beispielgraph_1.knoten_h.id, knoten2.id, 1);
     beispielgraph_1.addConnection(knoten1.id, knoten2.id, 2);
 
+    // Elternknoten aktualisieren
+    knoten1.elternID = beispielgraph_1.knoten_h.id;
+    knoten2.elternID = beispielgraph_1.knoten_h.id;
+    
+
     // Die Knoten zu dem zweiten Graphen
     let beispielgraph_2 = new Graph();
 
@@ -509,6 +514,10 @@ document.getElementById("zeichneTestGraphen").addEventListener("click", () => {
     beispielgraph_2.addConnection(beispielgraph_2.knoten_h.id, knoten21.id, 1);
     beispielgraph_2.addConnection(beispielgraph_2.knoten_h.id, knoten22.id, 1);
     beispielgraph_2.addConnection(knoten21.id, knoten22.id, 2);
+
+    // Elternknoten aktualisieren
+    knoten21.elternID = beispielgraph_2.knoten_h.id;
+    knoten22.elternID = beispielgraph_2.knoten_h.id;
 
     // Verbindungen zeichnen
     zeichneVerbindung();

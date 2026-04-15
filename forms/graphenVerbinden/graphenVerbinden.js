@@ -1,6 +1,7 @@
 import Graph from "../../graph_class.js";
 import Node from "../../node_class.js";
 import "../../graph.js";
+import {setOptionalenKnoten} from "../../menueOptionen/knotenMenue.js"
 
 document.getElementById("formGraphenVerbinden_GraphenVerbinden").addEventListener("click", () => {
     const graphID1 = parseInt(document.getElementById("formGraphenVerbinden_GraphID1").value);
@@ -17,8 +18,10 @@ document.getElementById("formGraphenVerbinden_GraphenVerbinden").addEventListene
 
     // Teilgraphen finden
     // let gemeinsamerGraph = findTeilgraphen();
-    findeGemeinsamenTeilgraphen(graphID1, graphID2);
+    // findeGemeinsamenTeilgraphen(graphID1, graphID2);
 
+    // Sequenzverbinden
+    sequenzVerbinden(graphID1, graphID2);
 
 
 
@@ -30,6 +33,72 @@ document.getElementById("formGraphenVerbinden_GraphenVerbinden").addEventListene
 document.getElementById("formGraphenVerbinden_Schliessen").addEventListener("click", () => {
     document.getElementById("formGraphenVerbinden").style.visibility = "hidden";
 })
+
+function sequenzVerbinden(graphID1, graphID2){
+    const graph1 = Graph.getByID(graphID1);
+    const graph2 = Graph.getByID(graphID2);
+
+    let graph1_unterknoten = [];
+    let graph2_unterknoten = [];
+    let optionaleKnoten = [[],[]];
+
+    for(let i=1; i<graph1.size; i++){
+        if(graph1.kanten[0][i] == 1){
+            graph1_unterknoten.push(Node.getByID(graph1.knoten[i]));
+        }
+    }
+
+    for(let i=1; i<graph2.size; i++){
+        if(graph2.kanten[0][i] == 1)
+            graph2_unterknoten.push(Node.getByID(graph2.knoten[i]));
+    }
+
+    function knotenVorhanden(knoten){
+        for(const obj of graph2_unterknoten){
+            if(obj.info == knoten.info)
+                return true;
+        }
+
+        return false;
+    }
+
+    for(let i=0; i<graph1_unterknoten.length; i++){
+        if(!knotenVorhanden(graph1_unterknoten[i])){
+            optionaleKnoten[0].push(graph1_unterknoten[i]);
+        }
+    }
+
+    console.log(optionaleKnoten);
+
+    let graphSeq = new Graph();
+    graphSeq.knoten_h.el.style.left = graph1.knoten_h.el.style.left;
+    graphSeq.knoten_h.el.style.top = graph1.knoten_h.el.style.top;
+
+    graphSeq.knoten_h.set_info(graph1.knoten_h.info);    
+
+    let knotenAnfang = Node.clone(graph1_unterknoten[0].id);
+    let knotenEnde = Node.clone(graph1_unterknoten[graph1_unterknoten.length-1].id);
+
+    graphSeq.addKnoten(knotenAnfang.id);
+    graphSeq.addKnoten(knotenEnde.id);
+
+    graphSeq.addConnection(graphSeq.knoten_h.id, knotenAnfang.id, 1);
+    graphSeq.addConnection(graphSeq.knoten_h.id, knotenEnde.id, 1);
+
+    if(optionaleKnoten[0].length == 1){
+        console.log(optionaleKnoten);
+
+        let optKnoten = Node.clone(optionaleKnoten[0][0].id);
+
+        graphSeq.addKnoten(optKnoten.id);
+
+        graphSeq.addConnection(graphSeq.knoten_h.id, optKnoten.id, 1);
+        graphSeq.addConnection(knotenAnfang.id, optKnoten.id, 2);
+        graphSeq.addConnection(optKnoten.id, knotenEnde.id, 2);
+        
+        setOptionalenKnoten(optKnoten);
+    }
+}
 
 
 function findeGemeinsamenTeilgraphen(graphID1, graphID2){
