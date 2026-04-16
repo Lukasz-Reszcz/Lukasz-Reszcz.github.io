@@ -1,7 +1,5 @@
 .draggable-el {
     position: absolute;
-    top: 5px;
-    left: 5px;
     background-color: forestgreen;
     padding: 2px 5px;
     cursor: grab;

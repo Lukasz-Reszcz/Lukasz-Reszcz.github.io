@@ -28,7 +28,7 @@ document.getElementById("formGraphenVerbinden_GraphenVerbinden").addEventListene
         sequenzVerbinden(graphID1, graphID2);
 
     // bloße Zusammensetzung
-    if(graphOption == "blosseZusammensetzung")
+    if(graphOption == "einfacheZusammensetzung")
         graphenZusammenstellen(graphID1, graphID2);
     
 });
@@ -390,13 +390,20 @@ function graphenZusammenstellen(graphID1, graphID2){
     const graph1 = Graph.getByID(graphID1);
     const graph2 = Graph.getByID(graphID2);
 
-    // Die 2 WKnoten entwurzeln
-
     let unterziel1 = Graph.getByID(graphID1).clone();
     let unterziel2 = Graph.getByID(graphID2).clone();
 
-    let gemeinsamGraph = new Graph(graph1.knoten_h.info);
-    
+    // Die 2 WKnoten entwurzeln
+    unterziel1.knoten_h.el.className = "draggable-el";
+    unterziel2.knoten_h.el.className = "draggable-el";
+
+    unterziel1.knoten_h.wurzelknoten = false;
+    unterziel2.knoten_h.wurzelknoten = false;
+
+    let gemeinsamGraph = new Graph();
+    gemeinsamGraph.knoten_h.set_info(graph1.knoten_h.info);
+
+
     for(const knot of unterziel1.knoten.concat(unterziel2.knoten)){
         Node.getByID(knot).graph_id = gemeinsamGraph.id;
         gemeinsamGraph.addKnoten(knot);   
