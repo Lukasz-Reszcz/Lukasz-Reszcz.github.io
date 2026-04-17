@@ -185,11 +185,12 @@ function leereVerbindungen(){
 function findeUnteknoten(knotenID){
     let unterknoten = [];
 
-    const graph = Node.getByID(knotenID).graph_id; 
+    const graph = Graph.getByID(Node.getByID(knotenID).graph_id); 
     const indxVon = graph.knoten.indexOf(knotenID);
 
     for(let i=0; i<graph.knoten.length; i++){
-        if(graph.kanten[indxVon][i] > 0 && !unterknoten.includes(graph.knoten[i])){
+        // > 0 -> == 1
+        if(graph.kanten[indxVon][i] == 1 && !unterknoten.includes(graph.knoten[i])){
             unterknoten.push(graph.knoten[i]);
         }
     }
@@ -204,12 +205,15 @@ function findeUnteknoten(knotenID){
 }
 
 function loescheUnterknoten(graphID, unterknoten){
-    const graph = Graph.getByID(graphID);
+    let graph = Graph.getByID(graphID);
     
     let uk = new Set(unterknoten);
     for(const knoten of uk){
         graph.loescheKnoten(knoten);
     }
+
+    // Debug
+    console.log(graph);
 }
 
 //=========================================================
@@ -387,9 +391,12 @@ document.getElementById("knotengleichungErstellen").addEventListener("click", ()
 
     for(let i=0; i<graph.knoten.length; i++){
         if(graph.kanten[indx][i] == 1){
-            unterknoten.push(graph.knoten[i]);
+            unterknoten.push(i); //graph.knoten[i]
         }
     }
+
+    // Debug
+    console.log(graph.kanten);
 
 
 
@@ -406,7 +413,7 @@ document.getElementById("knotengleichungErstellen").addEventListener("click", ()
         4: "|||"
     }
 
-    let gleichung = gleichungBilden(unterknoten[0]);
+    let gleichung = gleichungBilden(graph.knoten[unterknoten[0]]);
     alert("Gleichung: " + gleichung);
     
     // Node.getByID(graph.knoten[unterknoten[0]]).info + " " + mapVerbindung[verbindung] + " " + 

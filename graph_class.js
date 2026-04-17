@@ -61,26 +61,22 @@ export default class Graph {
 
         // Knoten kopieren
         for(const knotenid of this.knoten){
-            let knotenClone = Node.clone(knotenid);
-            if(knotenClone.wurzelknoten){
-                graphClone.knoten_h.set_info(knotenClone.info + " - Kopie");
+            let originalKnoten = Node.getByID(knotenid);
+            if(originalKnoten.wurzelknoten){
+                graphClone.knoten_h.set_info(originalKnoten.info + " - Kopie");
                 // graphClone.knoten_h.el.par.textContent = knotenClone.info;
 
                 // Warum muss der Wurzelknoten extra eingestellt werden
                 // weil es ein neuer Knoten ist, der mit dem Graphen
-                graphClone.knoten_h.el.style.top = knotenClone.el.style.top;
-                graphClone.knoten_h.el.style.left = knotenClone.el.style.left;
+                graphClone.knoten_h.el.style.top = originalKnoten.el.style.top;
+                graphClone.knoten_h.el.style.left = originalKnoten.el.style.left;
 
-                graphClone.knoten_h.stand = knotenClone.stand;
-
-                // Node.mapKopie.set(this.knoten_h.id, graphClone.knoten_h.id);
+                graphClone.knoten_h.stand = originalKnoten.stand;
+                
                 Node.mapKopie.set(graphClone.knoten_h.id, this.knoten_h.id );
-
-
-                // Den Kopierten Knoten löschen
-                knotenClone.loesche_Knoten();
             }
             else{
+                let knotenClone = Node.clone(knotenid);
                 graphClone.addKnoten(knotenClone.id);
             }   
         }
@@ -127,10 +123,6 @@ export default class Graph {
         }
         
         this.kanten.splice(knotenindex, 1);
-
-
-        // Debug
-        console.log(this);
 
     }
     // addVerbindung

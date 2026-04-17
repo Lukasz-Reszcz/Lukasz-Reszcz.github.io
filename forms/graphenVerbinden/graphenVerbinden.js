@@ -400,6 +400,11 @@ function graphenZusammenstellen(graphID1, graphID2){
     unterziel1.knoten_h.wurzelknoten = false;
     unterziel2.knoten_h.wurzelknoten = false;
 
+    // Graphen aus dem Register entfernen
+    Graph.register.delete(unterziel1.id);
+    Graph.register.delete(unterziel2.id);
+    
+
     let gemeinsamGraph = new Graph();
     gemeinsamGraph.knoten_h.set_info(graph1.knoten_h.info);
 
@@ -409,9 +414,52 @@ function graphenZusammenstellen(graphID1, graphID2){
         gemeinsamGraph.addKnoten(knot);   
     }
 
+    function verbindungVomUnterzielUebernehmen(unterziel){
+        for(let i=0; i<unterziel.size; i++){
+            for(let j=0; j<unterziel.size; j++){
+                if(unterziel.kanten[i][j] > 0){
+                    // Indizes von den Knoten in dem neuen Graphen
+                    let idxVon;
+                    let idxBis;
+                    for(const knotMap of Node.mapKopie){
+                        // Debug
+                        console.log(knotMap, unterziel.knoten[i], unterziel.knoten[j]);
+
+                        if(knotMap[1] == unterziel.knoten[i])
+                            idxVon = knotMap[0];
+
+                        if(knotMap[1] == unterziel.knoten[j])
+                            idxBis = knotMap[0];
+
+                        console.log(idxVon, idxBis);
+                    }
+
+                    console.log(idxVon, idxBis);
+
+                    gemeinsamGraph.addConnection(idxVon, idxBis, unterziel.kanten[i][j]);
+                }
+            }
+        }
+    }
+
+    verbindungVomUnterzielUebernehmen(graph1);
+    verbindungVomUnterzielUebernehmen(graph2);
+
+
+
+    
+    
+
+
+
+
     gemeinsamGraph.addConnection(gemeinsamGraph.knoten_h.id, unterziel1.knoten_h.id, 1);
     gemeinsamGraph.addConnection(gemeinsamGraph.knoten_h.id, unterziel2.knoten_h.id, 1);
     gemeinsamGraph.addConnection(unterziel1.knoten_h.id, unterziel2.knoten_h.id, 3);
+
+
+    // Verbindungen kopieren
+
 
     // Auch eltern?
 }
